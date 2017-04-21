@@ -1,64 +1,77 @@
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+package ru.stqa.jft.addressbook;
 
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
 import java.util.concurrent.TimeUnit;
-import java.util.Date;
-import java.io.File;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.*;
-import static org.openqa.selenium.OutputType.*;
 
 public class ContactAddingTest {
-    FirefoxDriver wd;
+    ChromeDriver driver;
     
     @BeforeMethod
     public void setUp() throws Exception {
-        wd = new FirefoxDriver();
-        wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.get("http://localhost/addressbook/");
+        login("admin", "secret");
     }
-    
+
+    private void login(String username, String password) {
+        driver.findElement(By.name("user")).click();
+        driver.findElement(By.name("user")).clear();
+        driver.findElement(By.name("user")).sendKeys(username);
+        driver.findElement(By.name("pass")).click();
+        driver.findElement(By.name("pass")).clear();
+        driver.findElement(By.name("pass")).sendKeys(password);
+        driver.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
+    }
+
     @Test
-    public void ContactAddingTest() {
-        wd.get("http://localhost/addressbook/");
-        wd.findElement(By.name("user")).click();
-        wd.findElement(By.name("user")).clear();
-        wd.findElement(By.name("user")).sendKeys("admin");
-        wd.findElement(By.name("pass")).click();
-        wd.findElement(By.name("pass")).clear();
-        wd.findElement(By.name("pass")).sendKeys("secret");
-        wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
-        wd.findElement(By.linkText("add new")).click();
-        wd.findElement(By.name("firstname")).click();
-        wd.findElement(By.name("firstname")).clear();
-        wd.findElement(By.name("firstname")).sendKeys("Firstname");
-        wd.findElement(By.name("lastname")).click();
-        wd.findElement(By.name("lastname")).clear();
-        wd.findElement(By.name("lastname")).sendKeys("Lastname");
-        wd.findElement(By.name("address")).click();
-        wd.findElement(By.name("address")).clear();
-        wd.findElement(By.name("address")).sendKeys("SomeCity, Nether Street, 123");
-        wd.findElement(By.name("mobile")).click();
-        wd.findElement(By.name("mobile")).clear();
-        wd.findElement(By.name("mobile")).sendKeys("+79876543210");
-        wd.findElement(By.name("email")).click();
-        wd.findElement(By.name("email")).clear();
-        wd.findElement(By.name("email")).sendKeys("nomail@domain.no");
-        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-        wd.findElement(By.linkText("home page")).click();
+    public void testContactAdding() {
+        initContactAdding();
+        fillContactForm(new ContactData("Firstname", "Lastname", "SomeCity, Nether Street, 123", "+79876543210", "nomail@domain.no"));
+        submitContactForm();
+        returnToHomePage();
     }
-    
+
+    private void returnToHomePage() {
+        driver.findElement(By.linkText("home page")).click();
+    }
+
+    private void submitContactForm() {
+        driver.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+    }
+
+    private void fillContactForm(ContactData contactData) {
+        driver.findElement(By.name("firstname")).click();
+        driver.findElement(By.name("firstname")).clear();
+        driver.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
+        driver.findElement(By.name("lastname")).click();
+        driver.findElement(By.name("lastname")).clear();
+        driver.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
+        driver.findElement(By.name("address")).click();
+        driver.findElement(By.name("address")).clear();
+        driver.findElement(By.name("address")).sendKeys(contactData.getAddress());
+        driver.findElement(By.name("mobile")).click();
+        driver.findElement(By.name("mobile")).clear();
+        driver.findElement(By.name("mobile")).sendKeys(contactData.getMobPhone());
+        driver.findElement(By.name("email")).click();
+        driver.findElement(By.name("email")).clear();
+        driver.findElement(By.name("email")).sendKeys(contactData.getEmail());
+    }
+
+    private void initContactAdding() {
+        driver.findElement(By.linkText("add new")).click();
+    }
+
     @AfterMethod
     public void tearDown() {
-        wd.quit();
+        driver.quit();
     }
     
-    public static boolean isAlertPresent(FirefoxDriver wd) {
+    public static boolean isAlertPresent(ChromeDriver driver) {
         try {
-            wd.switchTo().alert();
+            driver.switchTo().alert();
             return true;
         } catch (NoAlertPresentException e) {
             return false;
