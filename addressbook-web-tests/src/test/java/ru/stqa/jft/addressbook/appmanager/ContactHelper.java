@@ -7,6 +7,10 @@ import ru.stqa.jft.addressbook.model.ContactData;
 public class ContactHelper {
     ChromeDriver driver;
 
+    public ContactHelper(ChromeDriver driver) {
+        this.driver = driver;
+    }
+
     public void returnToHomePage() {
         driver.findElement(By.linkText("home page")).click();
     }

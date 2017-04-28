@@ -1,6 +1,5 @@
 package ru.stqa.jft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -12,6 +11,7 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    private SessionHelper sessionHelper;
 
     public static boolean isAlertPresent(ChromeDriver driver) {
         try {
@@ -26,20 +26,11 @@ public class ApplicationManager {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("http://localhost/addressbook/");
-        groupHelper = new GroupHelper(navigationHelper.driver);
-        navigationHelper = new NavigationHelper();
-        contactHelper = new ContactHelper();
-        login("admin", "secret");
-    }
-
-    private void login(String username, String password) {
-        driver.findElement(By.name("user")).click();
-        driver.findElement(By.name("user")).clear();
-        driver.findElement(By.name("user")).sendKeys(username);
-        driver.findElement(By.name("pass")).click();
-        driver.findElement(By.name("pass")).clear();
-        driver.findElement(By.name("pass")).sendKeys(password);
-        driver.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
+        groupHelper = new GroupHelper(driver);
+        navigationHelper = new NavigationHelper(driver);
+        contactHelper = new ContactHelper(driver);
+        sessionHelper = new SessionHelper(driver);
+        sessionHelper.login("admin", "secret");
     }
 
     public void stop() {
