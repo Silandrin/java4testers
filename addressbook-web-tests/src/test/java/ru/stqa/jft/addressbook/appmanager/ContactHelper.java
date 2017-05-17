@@ -10,7 +10,7 @@ public class ContactHelper extends HelperBase {
         super(driver);
     }
 
-    public void returnToHomePage() {
+    public void returnToContactPage() {
         click(By.linkText("home page"));
     }
 
@@ -28,5 +28,22 @@ public class ContactHelper extends HelperBase {
 
     public void initContactAdding() {
         click(By.linkText("add new"));
+    }
+
+    public void selectContact() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteSelectedContacts() {
+        click(By.cssSelector("input[value=Delete]"));
+        acceptAlert();
+    }
+
+    public void initContactModification() {
+        click(By.cssSelector("img[title=Edit]"));
+    }
+
+    public void submitContactModification() {
+        click(By.cssSelector("input[value=Update]"));
     }
 }
