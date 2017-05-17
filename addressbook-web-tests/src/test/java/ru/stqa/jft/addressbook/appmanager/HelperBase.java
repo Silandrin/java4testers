@@ -2,12 +2,12 @@ package ru.stqa.jft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
-    ChromeDriver driver;
+    WebDriver driver;
 
-    public HelperBase(ChromeDriver driver) {
+    public HelperBase(WebDriver driver) {
         this.driver = driver;
     }
 
