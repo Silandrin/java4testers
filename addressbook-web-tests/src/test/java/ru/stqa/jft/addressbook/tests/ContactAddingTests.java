@@ -7,10 +7,7 @@ public class ContactAddingTests extends TestBase {
 
     @Test
     public void testContactAdding() {
-        app.getContactHelper().initContactAdding();
-        app.getContactHelper().fillContactForm(new ContactData("Firstname", "Lastname", "SomeCity, Nether Street, 123", "+79876543210", "nomail@domain.no", "test1"), true);
-        app.getContactHelper().submitContactForm();
-        app.getContactHelper().returnToContactPage();
+        app.getContactHelper().addContact(new ContactData("Firstname", "Lastname", "SomeCity, Nether Street, 123", "+79876543210", "nomail@domain.no", "test1"), true);
     }
 
 }
