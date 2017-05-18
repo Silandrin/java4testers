@@ -3,9 +3,14 @@ package ru.stqa.jft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.jft.addressbook.model.ContactData;
+import ru.stqa.jft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -69,5 +74,16 @@ public class ContactHelper extends HelperBase {
 
     public int getContactCount() {
         return driver.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> firstNames = driver.findElements(By.cssSelector("tr[name = entry] td:nth-child(3)"));
+        List<WebElement> lastNames = driver.findElements(By.cssSelector("tr[name = entry] td:nth-child(2)"));
+        for (int i = 0; i < firstNames.size(); i++) {
+            ContactData contact = new ContactData(firstNames.get(i).getText(), lastNames.get(i).getText(), null, null, null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
