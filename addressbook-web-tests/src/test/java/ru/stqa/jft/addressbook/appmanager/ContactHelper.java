@@ -39,8 +39,8 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        driver.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContacts() {
@@ -48,8 +48,8 @@ public class ContactHelper extends HelperBase {
         acceptAlert();
     }
 
-    public void initContactModification() {
-        click(By.cssSelector("img[title=Edit]"));
+    public void initContactModification(int index) {
+        driver.findElements(By.cssSelector("img[title=Edit]")).get(index).click();
     }
 
     public void submitContactModification() {
