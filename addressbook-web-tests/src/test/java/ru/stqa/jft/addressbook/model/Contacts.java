@@ -14,12 +14,12 @@ public class Contacts extends ForwardingSet<ContactData> {
     }
 
     public Contacts() {
-        this.delegate = new HashSet<>();
+        this.delegate = new HashSet<ContactData>();
     }
 
     @Override
-    protected Set delegate() {
-        return null;
+    protected Set<ContactData> delegate() {
+        return delegate;
     }
 
     public Contacts withAdded(ContactData contact) {
