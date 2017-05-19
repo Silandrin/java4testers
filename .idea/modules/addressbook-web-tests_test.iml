@@ -15,6 +15,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.hamcrest:java-hamcrest:2.0.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.beust:jcommander:1.69" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.gson:gson:2.8.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: mysql:mysql-connector-java:6.0.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.seleniumhq.selenium:selenium-api:3.4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:3.4.0" level="project" />
