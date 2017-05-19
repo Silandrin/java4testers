@@ -34,7 +34,7 @@ public class ContactCreationTests extends TestBase {
                     .withAddress(split[2])
                     .withMobPhone(split[3])
                     .withEmail(split[4])
-                    .withGroup(split[5])
+//                    .withGroup(split[5])
             });
             line = reader.readLine();
         }
