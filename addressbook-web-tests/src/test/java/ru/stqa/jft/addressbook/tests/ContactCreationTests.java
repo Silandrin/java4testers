@@ -5,7 +5,10 @@ import org.testng.annotations.Test;
 import ru.stqa.jft.addressbook.model.ContactData;
 import ru.stqa.jft.addressbook.model.Contacts;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,30 +19,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTests extends TestBase {
 
     @DataProvider
-    public Iterator<Object[]> validContacts() {
-        File photo = new File("src/test/resources/image.png");
+    public Iterator<Object[]> validContacts() throws IOException {
         List<Object[]> list = new ArrayList<Object[]>();
-        list.add(new Object[] {new ContactData().withFirstname("Firstname 1")
-                                                .withLastname("Lastname 1")
-                                                .withAddress("SomeCity, Nether Street, 1")
-                                                .withMobPhone("+19876543210")
-                                                .withEmail("nomail_1@domain.no")
-                                                .withGroup("test 1")
-                                                .withPhoto(photo)});
-        list.add(new Object[] {new ContactData().withFirstname("Firstname 2")
-                                                .withLastname("Lastname 2")
-                                                .withAddress("SomeCity, Nether Street, 2")
-                                                .withMobPhone("+29876543210")
-                                                .withEmail("nomail_2@domain.no")
-                                                .withGroup("test 2")
-                                                .withPhoto(photo)});
-        list.add(new Object[] {new ContactData().withFirstname("Firstname 3")
-                                                .withLastname("Lastname 3")
-                                                .withAddress("SomeCity, Nether Street, 3")
-                                                .withMobPhone("+39876543210")
-                                                .withEmail("nomail_3@domain.no")
-                                                .withGroup("test 3")
-                                                .withPhoto(photo)});
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
+        String line = reader.readLine();
+        while (line != null) {
+            String[] split = line.split(";");
+            list.add(new Object[] {new ContactData()
+                    .withFirstname(split[0])
+                    .withLastname(split[1])
+                    .withAddress(split[2])
+                    .withMobPhone(split[3])
+                    .withEmail(split[4])
+                    .withGroup(split[5])
+                    .withPhoto(new File(split[6]))
+            });
+            line = reader.readLine();
+        }
+
         return list.iterator();
     }
 
