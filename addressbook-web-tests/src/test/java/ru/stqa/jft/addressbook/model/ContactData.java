@@ -1,10 +1,14 @@
 package ru.stqa.jft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -52,10 +56,6 @@ public class ContactData {
     @Type(type = "text")
     private String email3;
 
-    @Expose
-    @Transient
-    private String group;
-
     @Transient
     private String allPhones;
 
@@ -65,6 +65,10 @@ public class ContactData {
     @Column(name = "photo")
     @Type(type = "text")
     private String photo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
     public int getId() {
         return id;
@@ -106,10 +110,6 @@ public class ContactData {
         return email3;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
     public String getAllPhones() {
         return allPhones;
     }
@@ -120,6 +120,10 @@ public class ContactData {
 
     public File getPhoto() {
         return new File(photo);
+    }
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     public ContactData withId(int id) {
@@ -169,11 +173,6 @@ public class ContactData {
 
     public ContactData withEmail3(String email3) {
         this.email3 = email3;
-        return this;
-    }
-
-    public ContactData withGroup(String group) {
-        this.group = group;
         return this;
     }
 

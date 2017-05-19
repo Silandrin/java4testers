@@ -20,7 +20,7 @@ public class ContactModificationTests extends TestBase {
                             .withAddress("SomeCity, Nether Street, 123")
                             .withMobPhone("+79876543210")
                             .withEmail("nomail@domain.no")
-                            .withGroup("test1")
+//                            .withGroup("test1")
                     , true);
         }
     }
