@@ -86,6 +86,17 @@ public class ContactHelper extends HelperBase {
                 .withEmail3(email3);
     }
 
+    public String infoFromDetailsForm(ContactData contact) {
+        driver.findElement(By.cssSelector("a[href='view.php?id=" + contact.getId() + "']")).click();
+        String details = driver.findElement(By.cssSelector("div#content")).getText();
+        driver.navigate().back();
+        return purge(details);
+    }
+
+    public String purge(String s) {
+        return s.replaceAll("\\n", "").replaceAll("\\s", "");
+    }
+
     public void create(ContactData contact, boolean creation) {
         initContactAdding();
         fillContactForm(contact, creation);
