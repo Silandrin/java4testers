@@ -1,0 +1,26 @@
+[
+  {
+    "firstname": "firstname 0",
+    "lastname": "lastname 0",
+    "address": "SomeCity, Nether Street, 0",
+    "mobPhone": "+09876543210",
+    "email": "nomail_0@domain.no",
+    "group": "test 0"
+  },
+  {
+    "firstname": "firstname 1",
+    "lastname": "lastname 1",
+    "address": "SomeCity, Nether Street, 1",
+    "mobPhone": "+19876543210",
+    "email": "nomail_1@domain.no",
+    "group": "test 1"
+  },
+  {
+    "firstname": "firstname 2",
+    "lastname": "lastname 2",
+    "address": "SomeCity, Nether Street, 2",
+    "mobPhone": "+29876543210",
+    "email": "nomail_2@domain.no",
+    "group": "test 2"
+  }
+]
