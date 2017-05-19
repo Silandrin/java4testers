@@ -153,4 +153,22 @@ public class ContactHelper extends HelperBase {
         }
         return new Contacts(contactCache);
     }
+
+    public void addContactToGroup(int id, String name) {
+        selectContactById(id);
+        selectGroupInAddDropdownList(name);
+        initAddContactInGroup();
+    }
+
+    private void selectGroupInAddDropdownList(String name) {
+        new Select(driver.findElement(By.name("to_group"))).selectByVisibleText(name);
+    }
+
+    private void initAddContactInGroup() {
+        click(By.name("add"));
+    }
+
+    public void removeContactFromGroup(int id) {
+        driver.findElement(By.cssSelector("select[name='group']>option[value='" + id + "']")).click();
+    }
 }
