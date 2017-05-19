@@ -61,6 +61,31 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector("input[value=Update]"));
     }
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstname = driver.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = driver.findElement(By.name("lastname")).getAttribute("value");
+        String address = driver.findElement(By.name("address")).getAttribute("value");
+        String home = driver.findElement(By.name("home")).getAttribute("value");
+        String mobile = driver.findElement(By.name("mobile")).getAttribute("value");
+        String work = driver.findElement(By.name("work")).getAttribute("value");
+        String email = driver.findElement(By.name("email")).getAttribute("value");
+        String email2 = driver.findElement(By.name("email2")).getAttribute("value");
+        String email3 = driver.findElement(By.name("email3")).getAttribute("value");
+        driver.navigate().back();
+        return new ContactData()
+                .withId(contact.getId())
+                .withFirstname(firstname)
+                .withLastname(lastname)
+                .withAddress(address)
+                .withHomePhone(home)
+                .withMobPhone(mobile)
+                .withWorkPhone(work)
+                .withEmail(email)
+                .withEmail2(email2)
+                .withEmail3(email3);
+    }
+
     public void create(ContactData contact, boolean creation) {
         initContactAdding();
         fillContactForm(contact, creation);
@@ -102,9 +127,18 @@ public class ContactHelper extends HelperBase {
         List<WebElement> elements = driver.findElements(By.cssSelector("tr[name = entry]"));
         for (WebElement element : elements) {
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            String lastName = element.findElement(By.cssSelector("tr[name = entry] td:nth-child(2)")).getText();
             String firstName = element.findElement(By.cssSelector("tr[name = entry] td:nth-child(3)")).getText();
-            String lastName = element.findElement(By.cssSelector("tr[name = entry] td:nth-child(2)")).getText();;
-            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+            String address = element.findElement(By.cssSelector("tr[name = entry] td:nth-child(4)")).getText();
+            String allEmails = element.findElement(By.cssSelector("tr[name = entry] td:nth-child(5)")).getText();
+            String allPhones = element.findElement(By.cssSelector("tr[name = entry] td:nth-child(6)")).getText();
+            contactCache.add(new ContactData()
+                    .withId(id)
+                    .withFirstname(firstName)
+                    .withLastname(lastName)
+                    .withAddress(address)
+                    .withAllEmails(allEmails)
+                    .withAllPhones(allPhones));
         }
         return new Contacts(contactCache);
     }
