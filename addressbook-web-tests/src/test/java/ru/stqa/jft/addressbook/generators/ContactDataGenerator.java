@@ -40,16 +40,24 @@ public class ContactDataGenerator {
     private void save(List<ContactData> contacts, File file) throws IOException {
         Writer writer = new FileWriter(file);
         for (ContactData contact : contacts) {
-            writer.write(String.format("%s;%s\n", contact.getFirstname(), contact.getLastname()));
+            writer.write(String.format("%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(), contact.getAddress(),
+                    contact.getMobPhone(), contact.getEmail(), contact.getGroup(), contact.getPhoto()));
         }
         writer.close();
     }
 
     private List<ContactData> generateContacts(int count) {
         List<ContactData> contacts = new ArrayList<ContactData>();
+        File photo = new File("src/test/resources/image.png");
         for (int i = 0; i < count; i++) {
             contacts.add(new ContactData().withFirstname(String.format("firstname %s", i))
-                    .withLastname(String.format("lastname %s", i)));
+                    .withLastname(String.format("lastname %s", i))
+                    .withAddress(String.format("SomeCity, Nether Street, %s", i))
+                    .withMobPhone(String.format("+%s9876543210", i))
+                    .withEmail(String.format("nomail_%s@domain.no", i))
+                    .withGroup(String.format("test %s", i))
+                    .withPhoto(photo)
+            );
         }
         return contacts;
     }
